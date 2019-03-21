@@ -1,0 +1,67 @@
+1. BYTE
+
+---Uslovni skokovi---
+
+00	BGRT
+01	BGRE
+02	BLSS
+03	BLEQ
+04	BGRTU
+05	BGREU
+06	BLSSU
+07	BLEQU
+08	BEQL
+09	BNEQ
+0A	BNEG
+0B	BNNG
+0C	BOVF
+0D	BNVF
+0E	BCR
+0F	BNCR
+
+---Bezuslovni skokovi---
+
+40	JMP
+41	JSR
+
+---Adresne operacije---
+
+C0	LOAD
+C1	LOADL
+C2	ST0RE
+C3	RTSO
+C4	ADD
+C5	SUB
+C6	AND
+C7	OR
+C8	XOR
+C9	NOT
+CF	HALT
+
+---Bezadresne operacije---
+
+80	RTS
+81	RTI
+82	ASR
+83	LSR
+84	ROR
+85	RORC
+86	ASL
+87	LSL
+88	ROL
+89	ROLC
+8A	INTE
+8B	INTD
+8C	STIVTP
+8D	STSP
+8E	PUSHALL
+8F	POPALL
+
+-----------------------------------------------
+2. BYTE:
+
+00 (8) regdir + koji registar
+01 (8) regind + koji registar
+10 (8) memdir + 2 bajta
+11 (8) regindpom + koji registar + pomeraj
+

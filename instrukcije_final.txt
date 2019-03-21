@@ -1,0 +1,316 @@
+100, C0 //LOAD iz IR63, AB=0
+101, 3F
+102, C2 //STORE, R3=0
+103, 03
+104, C2 //STORE, (R3)=0
+105, 43
+106, C0 //Load (02)
+107, 80
+108, 02
+109, 00
+10A, C2 //STORE, R1=AB
+10B, 01
+10C, C0 //Load (04)
+10D, 80
+10E, 04
+10F, 00
+110, C2 //STORE, R2=AB
+111, 02
+
+112, 8E //PUSHALL
+113, C0 //LOAD (R3)
+114, 43
+115, C4 //ADD, AB++
+116, 80
+117, 06
+118, 00
+119, C2 //STORE (R3)
+11A, 43
+
+//While !stack.empty()
+11B, C0 //LOAD (R3)
+11C, 43
+11D, 08 //BEQUL skok na kraj  !!! pomerajjjjj
+11E, 08
+11F, 00
+120, C5 //SUB, AB--
+121, 80
+122, 06
+123, 00
+124, C2 //STORE (R3)
+125, 43
+126, 8F //POPALL
+
+
+// ----PARTITION----
+
+127, C0 // LOAD (R2) X
+128, 42
+129, C2 // Store R10
+12A, 0A
+12B, C0 // LOAD R1
+12C, 01
+12D, C2 // Store R12 PROMENLJIVA J ZA PETLJU
+12E, 0C
+12F, C5 // A--
+130, 80
+131, 06
+132, 00
+133, C5 // A--
+134, 80
+135, 06
+136, 00
+137, C2 // STORE R11 PROMENLJIVA I
+138, 0B
+//ovde je pocetak petlje
+139, C0 // LOAD R2
+13A, 02
+13B, C5 // SUB R12
+13C, 0B
+13D, 08 // BRNCH ZERO , KRAJ FOR PETLJE
+13E, NAKNADNO UNETI POMERAJ
+13F, NAKNADNO UNETI POMERAJ
+140, C0 // LOAD X
+141, 0A
+142, C5 // SUB (R12)
+143, 4C
+144, 0A // BRNCH NEG ->skace na posle swap
+145, KASNIJE
+146, KASNIJE
+147, C0 // LOAD R11
+148, 0B
+149, C4 // A++
+14A, 80
+14B, 06
+14C, 00
+14D, C4 // DRUGI PUT A++
+14E, 80
+14F, 06
+150, 00
+151, C2 // STORE R11
+152, 0B 
+153, C2 // STORE R20
+154, 14
+155, C0 // LOAD R12
+156, 0C
+157, C2 // STORE R21
+158, 15 
+
+//swap:
+159, C0 //load (R20)
+15A, 54
+15B, C2//STORE R22
+15C, 16
+15D, C0//LOAD (R21)
+15E, 55
+15F, C2//STORE (R20)
+160, 54
+161, C0//LOAD R22
+162, 16
+163, C2//STORE (R21)
+164, 55
+
+
+
+165, C0 //LOAD J
+166, 0C
+167, C4 //inc * 2
+168, 80
+169, 06
+16A, 00
+16B, C4
+16C, 80
+16D, 06
+16E, 00
+16F, C2 //STORE J
+170, 0C
+171, //<- ovde ide jmp na pocetak for petlje
+172
+173
+174, C0 //LOAD I
+175, 0B
+176, C4 //inc
+177, 80
+178, 06
+179, 00
+17A, C4 //inc
+17B, 80
+17C, 06
+17D, 00
+17E, C2 //Store R20
+17F, 14
+180, C0//LOAD R2
+181, 02
+182, C2//STORE R21
+183, 15
+//swap:
+184, C0 //load (R20)
+185, 54
+186, C2//STORE R22
+187, 16
+188, C0//LOAD (R21)
+189, 55
+18A, C2//STORE (R20)
+18B, 54
+18C, C0//LOAD R22
+18D, 16
+18E, C2//STORE (R21)
+18F, 55
+
+190, C0//LOAD I
+191, 0B
+192, C4//inc
+193, 80
+194, 06
+195, 00
+196, C4//inc
+197, 80
+198, 06
+199, 00
+19A, C2 //STORE R4
+19B, 04
+
+
+//after partition
+
+//sacuvati R1 na R6
+
+19C, C0 //LOAD R1
+19D, 01
+19E, C2 //Store R6=R1
+19F, 06
+
+
+1A0, C0 //LOAD R2
+1A1, 02
+1A2, C5 //R2-R4 (high-pivot)
+1A3, 04
+1A4, 83 //LSR
+1A5, 83 //LSR
+1A6, 08 //BEQL ne stavlja gornju na stek    !!!!
+1A7,
+1A8,  
+//stavljanje gornje particije na stek:
+1A9, C0	//LOAD R4
+1AA, 04
+1AB, C4 //AB++
+1AC, 80
+1AD, 06
+1AE, 00
+1AF, C4 //AB++
+1B0, 80
+1B1, 06
+1B2, 00
+1B3, C2 //Store R1=R4+2
+1B4, 01
+1B5, 8E //PUSHALL
+1B6, C0	//LOAD (R3)
+1B7, 43
+1B8, C4	//A++
+1B9, 80
+1BA, 06
+1BB, 00
+1BC, C2	//STORE (R3)
+1BD, 43
+
+
+//Provera nize particije: //koraci sjebani
+		
+1BE, C0	//LOAD R6
+1BF, 06		
+1C0, C2 //STORE R1=R6
+1C1, 01
+
+1C2, C0	//LOAD R1
+1C3, 01
+1C4, C5 //R4-R1 (pivot-low)
+1C5, 04
+1C6, 83 //LSR
+1C7, 83 //LSR
+1C8, 08 //BEQL ne stavlja gornju na stek    !!!!
+1C9, XX
+1CA, XX
+
+// stavljanje nize particije na stek
+1CB, C0 //	LOAD R4
+1CC, 04
+1CD, C5 //AB--
+1CE, 80
+1CF, 06
+1D0, 00
+1D1, C5 //AB--
+1D2, 80
+1D3, 06
+1D4, 00
+1D5, C2 //Store R2=R4-2
+1D6, 02
+1D7, 8E //PUSHALL
+1D8, C0 //LOAD(R3)
+1D9, 43
+1DA, C4 //A++
+1DB, 80
+1DC, 06
+1DD, C2 //STORE (R3)
+1DE, 43
+1DF, 40 //JMP (WHILE PETLJA)
+1E0, 1B 
+1E1, 01
+1E2, 40 //JMP HALT
+1E3, 00
+1E4, 04
+
+
+//skok na kraj
+400,CF //HALT
+
+//kec za inkrement i dekrement jer nemam immed
+06, 01 
+07, 00
+
+//Pocetna i krajnja adresa niza
+02, 20
+03, 00
+04, 47
+05, 00
+
+//Niz
+20, 16
+21, 01
+22, 15
+23, 28
+24, 42
+25, 02
+26, 01
+27, 09
+28, 65
+29, 17
+2A, 02
+2B, 78
+2C, 36
+2D, 44
+2E, 41
+2F, 20
+30, 20
+31, 39
+32, 94
+33, 74
+34, 25
+35, 77
+36, 22
+37, 56
+38, 47
+39, 04
+3A, 31
+3B, 11
+3C, 17
+3D, 25
+3E, 61
+3F, 46
+40, 74
+41, 50
+42, 05
+43, 37
+44, 54
+45, 01
+46, 00
+47, 88
